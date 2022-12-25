@@ -27,14 +27,17 @@ const timerControlBtn=()=>{
 
 // timer function
 var myDate
+var day
 var hrs
 var min
 var sec
 const setMyTime = ()=>{
     myDate = new Date();
+    day = myDate.toDateString();
     hrs = myDate.getHours();
     min = myDate.getMinutes();
     sec = myDate.getSeconds();
+    dispDay.innerText = day
     dispTimer.innerHTML = `${hrs}<small class="fs-5">H</small>: ${min}<small class="fs-5">M</small>: ${sec}<small class="fs-5">S</small>`
 }
 // reset timer function
