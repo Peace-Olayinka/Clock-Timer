@@ -1,6 +1,7 @@
 // set timer project
 // using one button for both start and stop
 var timeInterval;
+var alarmInterval;
 const timerControlBtn=()=>{ 
     if ( myTBtn.innerText == "START") {
         timeInterval= setInterval(setMyTime, 1000); 
@@ -23,12 +24,17 @@ const timerControlBtn=()=>{
 //       clearInterval(timeInterval)
 //   } 
 // }
+
 // timer function
+var myDate
+var hrs
+var min
+var sec
 const setMyTime = ()=>{
-    let myDate = new Date();
-    let hrs = myDate.getHours();
-    let min = myDate.getMinutes();
-    let sec = myDate.getSeconds();
+    myDate = new Date();
+    hrs = myDate.getHours();
+    min = myDate.getMinutes();
+    sec = myDate.getSeconds();
     dispTimer.innerHTML = `${hrs}<small class="fs-5">H</small>: ${min}<small class="fs-5">M</small>: ${sec}<small class="fs-5">S</small>`
 }
 // reset timer function
@@ -38,7 +44,55 @@ const resetTimer = ()=>{
     myTBtn.innerText = "START"
     myTBtn.style.backgroundColor = "green" 
     myTBtn.style.color = "white" 
+    // for alarm
+    song.pause()
+    clearInterval(alarmInterval)
 }
+// time end !!!
+
+// alarm fauture button
+const alarmControl = ()=>{
+    if (alarmBtn.innerText== "SET ALARM") {
+        alarmInpBox.style.display = "block"
+        alarmBtn.innerText=" TURN ON ALARM"
+        alarmBtn.style.backgroundColor = "green"
+        alarmBtn.style.color = "white" 
+        alarmNotice.style.display = "none"
+        clearInterval(alarmInterval)
+        song.pause()
+    }
+    else if (alarmBtn.innerText== "TURN ON ALARM") {
+        alarmInpBox.style.display = "none"
+        alarmBtn.innerText=" TURN OFF ALARM"
+        alarmBtn.style.backgroundColor = "red"
+        alarmBtn.style.color = "white" 
+        alarmNotice.style.display = "block"
+        alarmInterval = setInterval( myAlarm, 1000)
+    }
+    else if (alarmBtn.innerText== "TURN OFF ALARM") {
+        alarmInpBox.style.display = "none"
+        alarmBtn.innerText=" SET ALARM"
+        alarmBtn.style.backgroundColor = "grey"
+        alarmBtn.style.color = "white" 
+        alarmNotice.style.display = "none"
+        clearInterval(alarmInterval)
+        song.pause()
+    }
+}
+// alarm operation function
+const myAlarm = ()=>{
+    setMyTime()
+    let currentTime = `${hrs}:${min}`
+    // console.log("current time " + currentTime)
+    let alarmSet = inpAlarm.value
+    if (alarmSet == currentTime) {
+        alarmNotice.innerHTML = `Your Alarm set for ${currentTime}  is Complete!`
+        song.play()
+    }else{
+        alarmNotice.innerHTML = `Upcoming Alarm Set For: ${alarmSet}`
+    }
+}
+// alarm end!!
 
 
 //countdown project
@@ -109,6 +163,7 @@ const resetCountdown = ()=>{
     inpBox.style.display="block"
     song.pause()
 }
+// countdown end !!!
 
 
 //stopwatch project
@@ -164,7 +219,7 @@ const stopwatch = ()=>{
     }
     dispStopwatch.innerHTML =`${watchhr}<small class="fs-5">H</small>: ${watchmins}<small class="fs-5">M</small>: ${watchsecs}<small class="fs-5">S</small>`
 }
-// reset countdown 
+// reset stopwatch 
 const resetStopwatch = ()=>{
     clearInterval(stopwatchInterval)
     dispStopwatch.innerHTML = `00: 00: 00`
@@ -194,4 +249,5 @@ const lapses=()=>{
             </tr>`  
     } 
 }
+// stopwatch end !!!
 
