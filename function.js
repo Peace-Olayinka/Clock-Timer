@@ -173,41 +173,42 @@ const resetCountdown = ()=>{
 // stopwatch control button
 var stopwatchInterval;
 const stopwatchControlBtn=()=>{ 
-    if (stopSec.value==="" && stopMin.value==="" && stopHrs.value==="") {
-        alert('Error! input can not be empty!')
-
-    }else{
-        if( stopBtn.innerText == "START") {
-            stopwatchInterval= setInterval(stopwatch, 1000); 
-            stopBtn.innerText = "STOP"
-            stopBtn.style.backgroundColor = "red"
-            stopBtn.style.color = "white" 
-            stopBox.style.display="none"
-            
-        }else if ( stopBtn.innerText == "STOP") {
-            clearInterval(stopwatchInterval)
-            stopBtn.innerText = "START"
-            stopBtn.style.backgroundColor = "green" 
-            stopBtn.style.color = "white" 
-            // to keep track of lapses 
-            let myLapses = {
-                lapHr:watchhr,
-                lapMin:watchmins,
-                lapSec:watchsecs
-            }
-            lapsesArray.push(myLapses)
-            lapses() 
-            song2.pause()
-        }
+    if( stopBtn.innerText == "START") {
+        stopwatchInterval= setInterval(stopwatch, 1); 
+        stopBtn.innerText = "PAUSE"
+        stopBtn.style.backgroundColor = "red"
+        stopBtn.style.color = "white"    
     }
+    else if ( stopBtn.innerText == "PAUSE") {
+        clearInterval(stopwatchInterval)
+        stopBtn.innerText = "START"
+        stopBtn.style.backgroundColor = "green" 
+        stopBtn.style.color = "white" 
+        // to keep track of lapses 
+        let myLapses = {
+            lapHr:watchhr,
+            lapMin:watchmins,
+            lapSec:watchsecs,
+            lapMiliSec :watchmilisec
+        }
+        lapsesArray.push(myLapses)
+        lapses() 
+        song2.pause()
+    }
+    
 }  
 // stopwatch function
 var song2 = new Audio("alarmTimeUp.mp3")
-let watchhr   = 0
-let watchmins = 0
-let watchsecs = 0
+var watchhr   = 0
+var watchmins = 0
+var watchsecs = 0
+var watchmilisec = 0
 const stopwatch = ()=>{
-    watchsecs++  
+    watchmilisec++  
+    if (watchmilisec==1000) {
+        watchmilisec = 0
+        watchsecs++
+    }
     if (watchsecs == 60) {
         watchsecs = 0
         watchmins++   
@@ -216,26 +217,21 @@ const stopwatch = ()=>{
         watchmins = 0
         watchhr++   
     }
-    if (watchhr==stopHrs.value && watchmins == stopMin.value && watchsecs == stopSec.value) {
-        clearInterval(stopwatchInterval)
-        song2.play()
-    }
-    dispStopwatch.innerHTML =`${watchhr}<small class="fs-5">H</small>: ${watchmins}<small class="fs-5">M</small>: ${watchsecs}<small class="fs-5">S</small>`
+    dispStopwatch.innerHTML =`${watchhr}<small class="fs-5">H</small>: ${watchmins}<small class="fs-5">M</small>: ${watchsecs}<small class="fs-5">S</small>  ${watchmilisec}<small class="fs-5">ms</small>`
+    song2.play()
 }
 // reset stopwatch 
 const resetStopwatch = ()=>{
     clearInterval(stopwatchInterval)
-    dispStopwatch.innerHTML = `00: 00: 00`
+    dispStopwatch.innerHTML = `00: 00: 00: 00`
     stopBtn.innerText = "START"
     stopBtn.style.backgroundColor = "green" 
     stopBtn.style.color = "white" 
-    stopHrs.value = ""
-    stopMin.value = ""
-    stopSec.value = ""
     watchhr   = 0
     watchmins = 0
     watchsecs = 0
-    stopBox.style.display="block"
+    watchmilisec = 0
+//  for lapses record
     lapsesArray.length = 0
     dispLapses.innerHTML = ""
     song2.pause()
@@ -248,7 +244,7 @@ const lapses=()=>{
         dispLapses.innerHTML +=
             `<tr>
                 <td>${index+1}</td>
-                <td>${lapsesArray[index].lapHr}<small>hr</small>: ${lapsesArray[index].lapMin}<small>min</small>: ${lapsesArray[index].lapSec}<small>sec</small></td>
+                <td>${lapsesArray[index].lapHr}<small>hr</small>: ${lapsesArray[index].lapMin}<small>min</small>: ${lapsesArray[index].lapSec}<small>sec</small> ${lapsesArray[index].lapMiliSec}<small class="fs-5">ms</small></td>
             </tr>`  
     } 
 }
