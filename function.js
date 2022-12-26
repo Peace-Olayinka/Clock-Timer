@@ -50,6 +50,11 @@ const resetTimer = ()=>{
     // for alarm
     song.pause()
     clearInterval(alarmInterval)
+    alarmBtn.innerText= "SET ALARM"
+    alarmBtn.style.backgroundColor = "grey"
+    alarmBtn.style.color = "white"
+    alarmInpBox.style.display = "none"
+    alarmNotice.style.display = "none"
 }
 // time end !!!
 
@@ -84,9 +89,10 @@ const alarmControl = ()=>{
 }
 // alarm operation function
 const myAlarm = ()=>{
-    setMyTime()
+    // myDate = new Date()
     let currentTime = `${hrs}:${min}`
-    // console.log("current time " + currentTime)
+    // let currentTime = myDate.toLocaleTimeString()
+    console.log("current time is " + currentTime)
     let alarmSet = inpAlarm.value
     if (alarmSet == currentTime) {
         alarmNotice.innerHTML = `Your Alarm set for ${currentTime}  is Complete!`
@@ -163,7 +169,7 @@ const resetCountdown = ()=>{
     inpHrs.value = ""
     inpMin.value = ""
     inpSec.value = ""
-    inpBox.style.display="block"
+    inpBox.style.display = "flex"
     song.pause()
 }
 // countdown end !!!
