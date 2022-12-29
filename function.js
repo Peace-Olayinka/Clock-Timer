@@ -15,6 +15,8 @@ const timerControlBtn=()=>{
         myTBtn.style.backgroundColor = "green" 
         myTBtn.style.color = "white"  
     }
+    // for navigation
+    clocktxt.style.color="green"
 }
 // alternatively using parameterizes function perform differt tasks with two seperate buttons:
 // const timerControlBtn=(key)=>{
@@ -42,16 +44,16 @@ const setMyTime = ()=>{
 }
 // reset timer function
 const resetTimer = ()=>{
-    clearInterval(timeInterval)
-    dispTimer.innerHTML = `00: 00: 00`
-    myTBtn.innerText = "START"
-    myTBtn.style.backgroundColor = "green" 
-    myTBtn.style.color = "white" 
+    // clearInterval(timeInterval)
+    // dispTimer.innerHTML = `00: 00: 00`
+    // myTBtn.innerText = "START"
+    // myTBtn.style.backgroundColor = "green" 
+    // myTBtn.style.color = "white" 
     // for alarm
     song.pause()
     clearInterval(alarmInterval)
     alarmBtn.innerText= "SET ALARM"
-    alarmBtn.style.backgroundColor = "grey"
+    alarmBtn.style.backgroundColor = "green"
     alarmBtn.style.color = "white"
     alarmInpBox.style.display = "none"
     alarmNotice.style.display = "none"
@@ -70,17 +72,21 @@ const alarmControl = ()=>{
         song.pause()
     }
     else if (alarmBtn.innerText== "TURN ON ALARM") {
-        alarmInpBox.style.display = "none"
-        alarmBtn.innerText=" TURN OFF ALARM"
-        alarmBtn.style.backgroundColor = "red"
-        alarmBtn.style.color = "white" 
-        alarmNotice.style.display = "block"
-        alarmInterval = setInterval( myAlarm, 1000)
+        if (inpAlarm.value == "") {
+            alert("Alarm not set!")
+        }else{
+            alarmInpBox.style.display = "none"
+            alarmBtn.innerText=" TURN OFF ALARM"
+            alarmBtn.style.backgroundColor = "red"
+            alarmBtn.style.color = "white" 
+            alarmNotice.style.display = "block"
+            alarmInterval = setInterval( myAlarm, 1000)
+        }
     }
     else if (alarmBtn.innerText== "TURN OFF ALARM") {
         alarmInpBox.style.display = "none"
         alarmBtn.innerText=" SET ALARM"
-        alarmBtn.style.backgroundColor = "grey"
+        alarmBtn.style.backgroundColor = "green"
         alarmBtn.style.color = "white" 
         alarmNotice.style.display = "none"
         clearInterval(alarmInterval)
@@ -141,7 +147,7 @@ const countdown = ()=>{
         inpMin.value -=1   
     }
     if (mins ==-1  && hr>0) {
-        inpMin.value = 59
+        inpMin.value = 60
         inpHrs.value -=1    
     }
     if (hr==0) {
@@ -201,7 +207,7 @@ const stopwatchControlBtn=()=>{
         lapses() 
         song2.pause()
     }
-    
+    myTab.style.display ="table"
 }  
 // stopwatch function
 var song2 = new Audio("alarmTimeUp.mp3")
@@ -241,6 +247,7 @@ const resetStopwatch = ()=>{
     lapsesArray.length = 0
     dispLapses.innerHTML = ""
     song2.pause()
+    myTab.style.display ="none"
 }
 // function to keep track of lapses
 var lapsesArray =[]
@@ -255,4 +262,32 @@ const lapses=()=>{
     } 
 }
 // stopwatch end !!!
+
+// navigator
+const navControl = (action)=>{
+    if (action =='countdown') {
+        countdowndiv.style.display ="flex"
+        countdowntxt.style.color ="green"
+        clockdiv.style.display ="none"
+        clocktxt.style.color ="black"
+        stopwatchdiv.style.display ="none"
+        stopwatchtxt.style.color ="black" 
+    }
+    else if (action =='stopwatch') {
+        stopwatchdiv.style.display ="flex"
+        stopwatchtxt.style.color ="green" 
+        countdowndiv.style.display ="none"
+        countdowntxt.style.color ="black"
+        clockdiv.style.display ="none"
+        clocktxt.style.color ="black"
+    }
+    else {
+        clockdiv.style.display ="flex"
+        clocktxt.style.color ="green"
+        countdowndiv.style.display ="none"
+        countdowntxt.style.color ="black"
+        stopwatchdiv.style.display ="none"
+        stopwatchtxt.style.color ="black"  
+    }
+}
 

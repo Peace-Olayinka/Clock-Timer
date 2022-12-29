@@ -9,27 +9,36 @@
 
         <style>
             table, th, td {
-                border:1px solid black;
+                border:1px solid green;
                 border-collapse: collapse;
                 padding: 5px;
                 text-align: center;
+                color: green;
             }
         </style>
 </head>
 <body onload="timerControlBtn()">
     <script src="function.js"></script>
-    <div class="container bg-light">
-        <div class="row px-3">
-            <div class=" col-xs-12 col-lg-6 mx-auto my-5 py-5 shadow rounded-5 text-center">
-                <h1>DIGITAL CLOCK</h1>
-                <div id="dispDay" class="text-danger fs-5 " ></div>
+    <div class="container bg-warning bg-opacity-75" style="height: 100vh;">
+        <div class="row py-2 px-auto mb-5 bg-warning shadow-lg" style="position: sticky; top:0;">
+            <strong id="clocktxt" class="col-3 fs-5" onclick="navControl('clock')">Clock</strong>
+            <strong id="countdowntxt" class="col-5 fs-5" onclick="navControl('countdown')">Countdown</strong>
+            <strong id="stopwatchtxt" class="col-4 fs-5" onclick="navControl('stopwatch')">Stopwatch</strong>
+            <div class="col-11 mx-auto  px-auto row">
+            </div>
+        </div>
+
+        <div class="row px-3 mt-5" id="clockdiv">
+            <div class=" col-xs-10 col-lg-6 mx-auto my-5 pt-4 pb-5 shadow-lg rounded-5 text-center">
+                <h3 class=" shadow-lg rounded-4 py-2 fw-bold text-success">DIGITAL CLOCK</h3>
+                <div id="dispDay" class="text-danger fw-bold fs-5 " ></div>
                 <div class="text-success m-3 fs-1 fw-bold" id="dispTimer">00: 00: 00 </div>
-                <div class="my-3 d-flex justify-content-center">
+                <div class="my-4 d-flex justify-content-center">
                     <button onclick="timerControlBtn()"  class="btn btn-transparent btn-outline-success fw-bold" id="myTBtn" >START</button>
                     <button onclick="resetTimer()" class="btn btn-transparent btn-outline-success fw-bold mx-2"> RESET</button>
                     <!-- using parameterized function -->
                     <!-- <button onclick="timerControlBtn(0)" class="btn btn-transparent btn-outline-primary fw-bold">STOP</button> -->
-                    <button onclick="alarmControl()" class="btn btn-transparent btn-outline-secondary fw-bold mx-2" id="alarmBtn">SET ALARM</button>
+                    <button onclick="alarmControl()" class="btn btn-transparent btn-outline-success fw-bold mx-2" id="alarmBtn">SET ALARM</button>
                 </div>  
                 <div class="col-8 m-auto" style="display: none;" id="alarmInpBox">
                     <label for="" class="text-success fw-bold">Set Alarm Here:</label>
@@ -38,32 +47,32 @@
                 <div class="m-auto text-danger fw-bold" id="alarmNotice" style="display: none;"> <span id="dispAlarmTime"></span></div>
             </div>
         </div>
-        <hr> 
-        <div class="row px-3">
-            <div class=" col-xs-12 col-lg-6 mx-auto my-5 py-5 shadow  rounded-5 text-center">
-                <h1>Countdown</h1>
-                <div id="inpBox" class="col-11 m-auto row">
-                    <input type="number" placeholder="Hours" id="inpHrs" class="col-4">
-                    <input type="number" placeholder="Minutes" id="inpMin" class="col-4">
-                    <input type="number" placeholder="Seconds" id="inpSec" class="col-4">
+        
+        <div class="row px-3 mt-5" style="display: none;" id="countdowndiv"> 
+            <div class=" col-xs-10 col-lg-6 mx-auto my-5 pt-4 pb-5 shadow-lg rounded-5 text-center">
+                <h3 class=" shadow-lg rounded-4 py-2 fw-bold text-success">Countdown</h3>
+                <div id="inpBox" class="col-11 mx-auto row my-4">
+                    <input type="number" placeholder="Hours" id="inpHrs" class="col-4 border p-2">
+                    <input type="number" placeholder="Minutes" id="inpMin" class="col-4 p-2">
+                    <input type="number" placeholder="Seconds" id="inpSec" class="col-4 p-2">
                 </div>
                 <div class="text-success m-3 fs-1 fw-bold" id="dispCountdown"> 00: 00: 00 </div>
-                <div class="my-3">
+                <div class="my-4">
                     <button onclick="countdownControlBtn()"  class="btn btn-transparent btn-outline-success fw-bold" id="myCBtn" > START</button>
                     <button onclick="resetCountdown()" class="btn btn-transparent btn-outline-success fw-bold mx-2"> RESET</button>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="row px-3">
-            <div class=" col-xs-12 col-lg-6 mx-auto my-5 py-5 shadow rounded-5  text-center">
-                <h1>Stopwatch</h1>
-                <div class="text-success m-3 fs-1 fw-bold" id="dispStopwatch"> 00: 00: 00: 00 </div>
-                <div class="my-3">
+       
+        <div class="row px-3 mt-5" style="display: none;" id="stopwatchdiv">
+            <div class=" col-xs-10 col-lg-6 mx-auto my-5 pt-4 pb-5 shadow-lg rounded-5 text-center">
+                <h3 class=" shadow-lg rounded-4 py-2 fw-bold text-success">Stopwatch</h3>
+                <div class="text-success my-5 mx-3 fs-1 fw-bold" id="dispStopwatch"> 00: 00: 00: 00 </div>
+                <div class="my-4">
                     <button onclick="stopwatchControlBtn()"  class="btn btn-transparent btn-outline-success fw-bold" id="stopBtn" > START</button>
                     <button onclick="resetStopwatch()" class="btn btn-transparent btn-outline-success fw-bold mx-2"> RESET</button>
                     <hr>
-                    <table class="m-auto w-75">
+                    <table id="myTab" class="m-auto w-75" style="display: none;">
                         <thead>
                             <tr>
                                 <th colspan="2">Lapses Record</th>
@@ -79,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <hr>
+        
     </div>
 
   
